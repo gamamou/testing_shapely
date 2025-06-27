@@ -1,0 +1,4 @@
+streamlit>=1.27
+cython
+numpy
+shapely==1.8.5.post1
