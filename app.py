@@ -1,6 +1,5 @@
 import streamlit as st
 from shapely.geometry import Point, Polygon
-from shapely.vectorized import contains
 import numpy as np
 
 # Simple test polygon (square)
@@ -10,7 +9,10 @@ poly = Polygon([(0, 0), (0, 10), (10, 10), (10, 0)])
 x = np.array([1, 5, 15])
 y = np.array([1, 5, 5])
 
-# Use shapely.vectorized.contains to test
-mask = contains(poly, x, y)
+# Check if each point is inside the polygon
+points = [Point(x[i], y[i]) for i in range(len(x))]
+mask = [poly.contains(pt) for pt in points]
 
-st.write("Points inside polygon:", mask)
+st.subheader("Points inside polygon:")
+for i, inside in enumerate(mask):
+    st.write(f"Point ({x[i]}, {y[i]}) → {'Inside' if inside else 'Outside'}")
